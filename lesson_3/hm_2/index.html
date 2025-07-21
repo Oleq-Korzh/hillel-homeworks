@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<script>
+		const firstName = prompt('Ваше имя', '');
+		const lastName = prompt('Ваша фамилия', '');
+		const age = parseInt(prompt('Ваш возраст', ''));
+
+		if (firstName && lastName && age) {
+			alert(`Привет! Тебя зовут ${firstName} ${lastName}. Тебе ${age} лет.`);
+		} else {
+			alert('Неправильно введены данные! Попробуйте в следующий раз снова');
+		}
+	</script>
+</body>
+
+</html>
