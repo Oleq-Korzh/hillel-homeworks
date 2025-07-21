@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	
+
+	<script>
+		// Null === object :)
+		const arrayTypes = [1, 'Oleg', null, undefined, true, {name: 'Oleg'}, 9999999999999999n, Symbol('id')];
+
+		arrayTypes.forEach(type => {
+			console.log(typeof type);
+		});
+	</script>
+</body>
+</html>
