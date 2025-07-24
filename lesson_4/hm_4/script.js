@@ -1,28 +1,26 @@
 let numOrStr = prompt('input number or string');
-let message = '';
+console.log(numOrStr)
 
-if (numOrStr === null) {
-	message = 'ви скасували';
-} else if (numOrStr.trim() === '') {
-	message = 'Empty String';
-} else if (isNaN(+numOrStr)) {
-	message = ' number is Ba_NaN';
-} else {
-	message = 'OK!';
-}
+// if (numOrStr === null) {
+//     console.log('ви скасували')
+// } else if (numOrStr.trim() === '') {
+//     console.log('Empty String');
+// } else if (isNaN(+numOrStr)) {
+//     console.log(' number is Ba_NaN')
+// } else {
+//     console.log('OK!')
+// }
 
-switch (message) {
-	case 'ви скасували': 
+switch (true) {
+	case numOrStr === null: 
 		console.log('ви скасували');
 		break;
-	case 'Empty String':
+	case numOrStr.trim() === '':
 		console.log('Empty String');
 		break;
-	case ' number is Ba_NaN': 
+	case isNaN(+numOrStr): 
 		console.log(' number is Ba_NaN');
 		break;
 	default:
 		console.log('OK!'); // Break не обязателен
 }
-
-// Я не придумал, как в свитче проверить isNan, наверное никак
