@@ -10,3 +10,5 @@ if (numInput > 1) {
 		}
 	}
 }
+
+console.log(isSimple ? 'число простое' : 'число НЕ простое');
