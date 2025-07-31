@@ -12,7 +12,7 @@
 // }
 
 function getNumbersAverageFromArray(array) {
-	return Math.round(array.reduce((acc, current) => typeof current === 'number' ? acc += current : acc += 0, 0) / array.length);
+	return Math.round(array.reduce((acc, current) => typeof current === 'number' ? acc += current : acc, 0) / array.length);
 }
 
 const result = getNumbersAverageFromArray([1, 2, 3, 4, 5, 6, 'test', 4, 'Oleg']);
