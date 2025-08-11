@@ -5,8 +5,12 @@ function inputMoreThanHundred() {
 		const userInput = +prompt('Введите число больше 100', '');
 		lastInput = userInput;
 
-		if (userInput > 100) {
-			return lastInput
+		if (!isNaN(userInput)) {
+			continue;
+		}
+
+		if (userInput > 100 || userInput === 'null') {
+			return lastInput;
 		}
 	}
 
