@@ -1,6 +1,10 @@
 console.log(orders);
 
 const structuredUsers = (orders) => {
+	if (orders.length === 0) {
+		return;
+	}
+
 	return Object.values(orders.reduce((acc, current) => {
 		const userName = current.user;
 		if (acc[userName]) {
@@ -14,6 +18,10 @@ const structuredUsers = (orders) => {
 }
 
 const addTotalSumToUser = (users) => {
+	if (users.length === 0) {
+		return;
+	}
+
 	return users.map(obj => {
 		return {
 			...obj,
@@ -24,12 +32,20 @@ const addTotalSumToUser = (users) => {
 }
 
 const getUniqueProducts = (users) => {
+	if (users.length === 0) {
+		return;
+	}
+
 	return new Set(users.reduce((acc, current) => {
 		return [...acc, ...current.items];
 	}, []).map(el => el.name));
 }
 
 const getUserWhoSpentMost = (users) => {
+	if (users.length === 0) {
+		return;
+	}
+
 	return users.reduce((acc, current) => {
 		return acc.totalSum < current.totalSum ? current : acc;
 	});
