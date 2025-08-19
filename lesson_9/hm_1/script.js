@@ -1,26 +1,18 @@
-let company = {
-	sales: [{
-			name: 'John',
-			salary: 1000
-		},
-		{
-			name: 'Alice',
-			salary: 600
+function deepSearchAllSalary(obj, value) {
+	const array = Array.isArray(obj) ? obj : Object.values(obj);
+	let acc = 0; 
+
+	for (let el of array) {
+		if (el.salary) {
+			acc += el.salary;
+		} else if (typeof el === 'object') {
+			acc += deepSearchAllSalary(el);
 		}
-	],
-	development: {
-		web: [{
-				name: 'Peter',
-				salary: 2000,
-			},
-			{
-				name: 'Alex',
-				salary: 1800
-			}
-		],
-		internals: [{
-			name: 'Jack',
-			salary: 1300
-		}]
 	}
+
+	return acc;
 }
+
+const result = deepSearchAllSalary(company);
+
+console.log(result);
