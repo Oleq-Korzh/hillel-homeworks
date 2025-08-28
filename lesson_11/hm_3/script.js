@@ -6,7 +6,7 @@ const createUrl = (name) => {
 	return `./images/${name}.jpg`;
 }
 
-const setHandleAnimalsGallery = () => {
+const setHandleAnimalsGallery = (max) => {
 	const img = document.querySelector('.img');
 	const button = document.querySelector('.button');
 
@@ -15,11 +15,11 @@ const setHandleAnimalsGallery = () => {
 	}
 
 	button.addEventListener('click', () => {
-		const num = generateRandomNum(9);
+		const num = generateRandomNum(max);
 		const url = createUrl(num);
 
 		img.src = url;
 	});
 }
 
-setHandleAnimalsGallery();
+setHandleAnimalsGallery(9);
