@@ -1,3 +1,9 @@
+const toggleTitleColor = (textEl) => {
+	return () => {
+		textEl.classList.toggle('red');
+	}
+};
+
 const setHandleForButtonAndText = () => {
 	const text = document.querySelector('.text');
 	const button = document.querySelector('.button');
@@ -6,9 +12,17 @@ const setHandleForButtonAndText = () => {
 		return;
 	}
 
-	button.addEventListener('click', () => {
-		text.classList.toggle('red');
-	});
+	button.addEventListener('click', toggleTitleColor(text));
+
+	return {
+		text,
+		button
+	}
 }
 
-setHandleForButtonAndText();
+const {
+	text,
+	button
+} = setHandleForButtonAndText();
+
+button.click();
