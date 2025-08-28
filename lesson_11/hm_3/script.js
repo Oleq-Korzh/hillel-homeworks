@@ -1,0 +1,25 @@
+const createUrl = (name) => {
+	return `./images/${name}.jpg`;
+}
+
+const generateRandomNum = (end) => {
+	return Math.floor(Math.random() * end) + 1;
+}
+
+const setHandleAnimalsGallery = () => {
+	const img = document.querySelector('.img');
+	const button = document.querySelector('.button');
+
+	if (!img || !button) {
+		return;
+	}
+
+	button.addEventListener('click', () => {
+		const num = generateRandomNum(9);
+		const url = createUrl(num);
+
+		img.src = url;
+	});
+}
+
+setHandleAnimalsGallery();
