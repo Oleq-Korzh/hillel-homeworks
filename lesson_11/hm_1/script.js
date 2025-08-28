@@ -1,13 +1,21 @@
 const app = document.querySelector('.app');
 
-const createElementWithClass = (element, className) => {
+const createElementWithClass = (element = 'div', className = '') => {
 	const item = document.createElement(element);
+
 	item.classList.add(className);
 
 	return item;
 }
 
 const renderPifagorTable = (size) => {
+	if (size <= 2) {
+		const title = createElementWithClass('h1', 'title');
+		title.textContent = 'Ошибка! Введите число больше 2х';
+
+		return title;
+	}
+
 	const table = createElementWithClass('div', 'table');
 	const row = createElementWithClass('div', 'row');
 
