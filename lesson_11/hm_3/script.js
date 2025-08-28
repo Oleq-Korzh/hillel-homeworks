@@ -1,9 +1,9 @@
-const createUrl = (name) => {
-	return `./images/${name}.jpg`;
-}
-
 const generateRandomNum = (end) => {
 	return Math.floor(Math.random() * end) + 1;
+}
+
+const createUrl = (name) => {
+	return `./images/${name}.jpg`;
 }
 
 const setHandleAnimalsGallery = () => {
