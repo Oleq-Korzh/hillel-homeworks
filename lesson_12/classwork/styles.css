@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.wrapper > div {
+  min-width: 350px;
+  min-height: 100px;
+  padding: 20px;
+  border: 1px solid black;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  display: block;
+  width: fit-content;
+}
+
+li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
