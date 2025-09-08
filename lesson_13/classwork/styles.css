@@ -1,0 +1,32 @@
+body {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	background: rosybrown;
+}
+
+.form {
+	display: grid;
+	grid-gap: 16px;
+	width: 600px;
+	background: white;
+	padding: 32px;
+}
+
+.table.hidden {
+	display: none;
+}
+
+.table {
+	background: white;
+	border-radius: 12px;
+	padding: 20px;
+}
+
+.table__row {
+	padding: 8px;
+	border: 1px solid grey;
+}
