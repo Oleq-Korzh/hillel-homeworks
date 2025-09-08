@@ -1,22 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BOM, Events</title>
-  <link rel="stylesheet" href="styles.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BOM, Events</title>
+	<link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  
-  <div class="wrapper">
-    <div class="categories"></div>
-    <div class="products"></div>
-    <div class="info"></div>
-  </div>
 
-  <div class="order-details"></div>
+	<div class="wrapper">
+		<div class="categories"></div>
+		<div class="products"></div>
+		<div class="info"></div>
+	</div>
 
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+	<div class="order-form">
+		<form class="form" name="order">
+			<input type="text" name="fullname" placeholder="ФИО">
+			<select name="city">
+				<option value="" disabled selected>Выберете ваш город</option>
+				<option value="KH">Kharkiv</option>
+				<option value="OD">Odessa</option>
+				<option value="KV">Kyiv</option>
+				<option value="LV">Lviv</option>
+			</select>
+			<input type="text" name="delivery" placeholder="delivery">
+			<fieldset id="payment">
+				<label for="payment">Наложенный платёж или оплата на карту</label>
+				<input type="radio" name="payment" checked value="cod">
+				<input type="radio" name="payment" value="bank">
+			</fieldset>
+			<textarea name="comment"></textarea>
+			<button type="button">Сохранить</button>
+		</form>
+	</div>
+	<div class="order-details"></div>
+
+	<script src="js/data.js"></script>
+	<script src="js/app.js"></script>
 </body>
+
 </html>

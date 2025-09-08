@@ -1,25 +1,49 @@
 .wrapper {
-  display: flex;
-  gap: 20px;
+	display: flex;
+	gap: 20px;
 }
 
-.wrapper > div {
-  min-width: 350px;
-  min-height: 100px;
-  padding: 20px;
-  border: 1px solid black;
+.wrapper>div {
+	min-width: 350px;
+	min-height: 100px;
+	padding: 20px;
+	border: 1px solid black;
 }
 
 ul {
-  list-style: none;
+	list-style: none;
 }
 
 li {
-  display: block;
-  width: fit-content;
+	display: block;
+	width: fit-content;
 }
 
 li:hover {
-  text-decoration: underline;
-  cursor: pointer;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.order-form.hidden {
+	display: none;
+}
+
+.order-form {
+	max-width: 600px;
+	margin: 24px auto;
+	background: white;
+	border: 1px solid grey;
+	border-radius: 12px;
+	padding: 24px;
+}
+
+.form {
+	display: grid;
+	grid-gap: 12px;
+}
+
+.error {
+	display: block;
+	color: red;
+	margin-top: 12px;
 }
