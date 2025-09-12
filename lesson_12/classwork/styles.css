@@ -1,6 +1,7 @@
 .wrapper {
-	display: flex;
-	gap: 20px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 24px;
 }
 
 .wrapper>div {
@@ -24,10 +25,6 @@ li:hover {
 	cursor: pointer;
 }
 
-.order-form.hidden {
-	display: none;
-}
-
 .order-form {
 	max-width: 600px;
 	margin: 24px auto;
@@ -46,4 +43,25 @@ li:hover {
 	display: block;
 	color: red;
 	margin-top: 12px;
+}
+
+.top-buttons {
+	display: flex;
+	margin-bottom: 24px;
+}
+
+.order-list-button,
+.order-list-back {
+	height: 40px;
+	background: orangered;
+	color: white;
+	border: none;
+	outline: none;
+	border-radius: 6px;
+	cursor: pointer;
+	padding: 6px 20px;
+}
+
+.hidden {
+	display: none;
 }

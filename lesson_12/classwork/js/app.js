@@ -103,6 +103,38 @@ const renderOrderInfo = (product, objData) => {
 	return orderTable;
 };
 
+const renderOrderList = (array, wrapper) => {
+
+	if (!wrapper) {
+		return;
+	}
+
+	wrapper.innerHTML = '';
+
+	if (array === null || array.length === 0) {
+		wrapper.textContent = 'Список пуст!';
+
+		return;
+	}
+
+	array.forEach(el => {
+		const layout = `
+			<div class="order-item" data-id="${el.id}">
+				<div class="order-item__top">
+					<span>Дата заказа: <strong>${el.date}</strong></span>
+					<span>Название товара: <strong>${el.product.name}</strong></span>
+					<span>Цена: <strong>${el.product.price}</strong></span>
+				</div>
+				<div class="order-item__bottom">
+					<button class="order-item__delete">Удалить товар</button>
+				</div>
+			</div>
+		`;
+
+		wrapper.innerHTML += layout;
+	})
+};
+
 const resetForm = (form, formParent, className) => {
 	const formError = formParent.querySelectorAll('.error');
 	form.reset();
@@ -132,6 +164,7 @@ const validateFormValue = (string) => {
 }
 
 const productTableInit = () => {
+	const colsWrapper = document.querySelector('.wrapper');
 	const categoriesCol = document.querySelector('.categories');
 	const productsCol = document.querySelector('.products');
 	const infoCol = document.querySelector('.info');
@@ -139,16 +172,56 @@ const productTableInit = () => {
 	const orderForm = document.forms.order;
 	const orderFormSubmit = orderForm.querySelector('button');
 	const orderEl = document.querySelector('.order-details');
+	const orderList = document.querySelector('.order-list');
+	const orderListButton = document.querySelector('.order-list-button');
+	const orderListBackButton = document.querySelector('.order-list-back');
 	const FORM_HIDDEN_CLASS = 'hidden';
+	const STORAGE_ORDER = 'orders';
 
-	if (!categoriesCol || !productsCol || !infoCol || !orderEl || !orderFormWrapperEl || !orderForm) {
+	if (![colsWrapper, categoriesCol, productsCol, infoCol, orderEl, orderFormWrapperEl,
+			orderForm, orderList, orderListButton, orderListBackButton
+		].every(e => e)) {
 		return;
 	}
 
-	orderFormWrapperEl.classList.add(FORM_HIDDEN_CLASS);
+	const initTable = () => {
+		orderFormWrapperEl.classList.add(FORM_HIDDEN_CLASS);
+		orderList.classList.add(FORM_HIDDEN_CLASS);
+		orderListBackButton.classList.add(FORM_HIDDEN_CLASS);
+
+		const storage = JSON.parse(localStorage.getItem(STORAGE_ORDER));
+
+		renderOrderList(storage, orderList);
+	}
+
+	const resetTable = (...elems) => {
+		elems.forEach(el => el.replaceChildren());
+		resetForm(orderForm, orderFormWrapperEl, FORM_HIDDEN_CLASS);
+	}
+
+	const showElems = (...elems) => {
+		elems.forEach(el => el.classList.remove(FORM_HIDDEN_CLASS));
+	}
+
+	const hideElems = (...elems) => {
+		elems.forEach(el => el.classList.add(FORM_HIDDEN_CLASS));
+	}
+
+	const removeElementFromStorage = (parent) => {
+		const parentId = parseInt(parent.dataset.id);
+		const storageOrder = JSON.parse(localStorage.getItem(STORAGE_ORDER));
+
+		const newStorage = storageOrder.filter(el => el.id !== parentId);
+		localStorage.setItem(STORAGE_ORDER, JSON.stringify(newStorage));
+
+		renderOrderList(newStorage, orderList);
+	}
+
+	initTable();
 
 	const showForm = (product) => {
-		orderFormWrapperEl.classList.remove(FORM_HIDDEN_CLASS);
+		resetForm(orderForm, orderFormWrapperEl, FORM_HIDDEN_CLASS);
+		showElems(orderFormWrapperEl);
 
 		orderFormSubmit.addEventListener('click', () => {
 			const formData = {
@@ -174,14 +247,24 @@ const productTableInit = () => {
 			}
 
 			const orderInfoEl = renderOrderInfo(product, formData);
+			const storageOrder = JSON.parse(localStorage.getItem(STORAGE_ORDER)) || [];
 
+			storageOrder.push({
+				id: Date.now(),
+				date: new Date().toISOString().slice(0, 10),
+				product,
+				formData
+			});
+
+			resetTable(orderEl);
 			orderEl.appendChild(orderInfoEl);
+			localStorage.setItem(STORAGE_ORDER, JSON.stringify(storageOrder));
+			renderOrderList(JSON.parse(localStorage.getItem(STORAGE_ORDER)), orderList);
 		});
 	}
 
 	const showProductsByCategory = category => {
-		[productsCol, infoCol, orderEl].forEach(el => el.replaceChildren());
-		resetForm(orderForm, orderFormWrapperEl, FORM_HIDDEN_CLASS);
+		resetTable(productsCol, infoCol, orderEl);
 		const productsList = renderProductsList(category);
 
 		productsCol.appendChild(productsList);
@@ -230,19 +313,46 @@ const productTableInit = () => {
 	}
 
 	const showProductInfo = product => {
-		[infoCol, orderEl].forEach(el => el.replaceChildren());
-		resetForm(orderForm, orderFormWrapperEl, FORM_HIDDEN_CLASS);
+		resetTable(infoCol, orderEl);
 		const infoList = renderProductInfoList(product);
 
 		infoCol.appendChild(infoList);
 
 		infoList.addEventListener('click', event => {
 			if (event.target && event.target.closest('button')) {
+				orderEl.innerHTML = '';
 				showForm(product);
 			}
 		});
 	}
 
+	const showOrderList = () => {
+		orderListButton.addEventListener('click', () => {
+			resetTable(productsCol, infoCol, orderEl);
+			hideElems(orderListButton, colsWrapper);
+			showElems(orderListBackButton, orderList);
+		});
+
+		orderListBackButton.addEventListener('click', () => {
+			showElems(orderListButton, colsWrapper);
+			hideElems(orderListBackButton, orderList);
+		});
+
+		orderList.addEventListener('click', event => {
+			if (event && event.target.closest('.order-item__delete')) {
+				const targetEl = event.target;
+				const parent = targetEl.closest('.order-item');
+
+				if (!parent) {
+					return;
+				}
+
+				removeElementFromStorage(parent);
+			}
+		});
+	}
+
+	showOrderList();
 	showCategories();
 }
 
