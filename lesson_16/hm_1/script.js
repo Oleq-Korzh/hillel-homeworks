@@ -19,7 +19,7 @@ function Student(firstName, lastName, age, ratingArr = []) {
 			increment++;
 		}
 	};
-	this.getAttendance = () => {
+	this.getAttendanceList = () => {
 		return [...attendance];
 	};
 	this.summary = () => {
@@ -84,5 +84,5 @@ student.present();
 // student.absent();
 // student.absent();
 
-console.log(student.getAttendance());
+console.log(student.getAttendanceList());
 console.log(student.summary());;
