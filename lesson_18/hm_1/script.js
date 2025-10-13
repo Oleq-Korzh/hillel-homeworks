@@ -30,6 +30,12 @@ class Countdown {
     this.renderTimer(Countdown.parseSeconds(this.seconds));
   }
 
+  #stopTick() {
+    clearInterval(this.#interval);
+    this.#interval = null;
+    this.#state = Countdown.NOTWORK_STATE;
+  }
+
   startTick() {
     if (this.#state === Countdown.WORK_STATE) {
       return;
@@ -53,20 +59,18 @@ class Countdown {
     return this;
   }
 
-  pause(isReset = false) {
-    if (this.#state === Countdown.NOTWORK_STATE && !isReset) {
+  pause() {
+    if (this.#state === Countdown.NOTWORK_STATE) {
       return;
     }
 
-    clearInterval(this.#interval);
-    this.#interval = null;
-    this.#state = Countdown.NOTWORK_STATE;
+    this.#stopTick();
 
     return this;
   }
 
   reset() {
-    this.pause(true);
+    this.#stopTick();
     this.seconds = this.#initialSeconds;
     this.renderTimer(Countdown.parseSeconds(this.seconds));
 
