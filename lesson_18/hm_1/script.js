@@ -53,8 +53,8 @@ class Countdown {
     return this;
   }
 
-  pause() {
-    if (this.#state === Countdown.NOTWORK_STATE) {
+  pause(isReset = false) {
+    if (this.#state === Countdown.NOTWORK_STATE && isReset) {
       return;
     }
 
@@ -66,9 +66,7 @@ class Countdown {
   }
 
   reset() {
-    clearInterval(this.#interval);
-    this.#interval = null;
-    this.#state = Countdown.NOTWORK_STATE;
+    this.pause(true);
     this.seconds = this.#initialSeconds;
     this.renderTimer(Countdown.parseSeconds(this.seconds));
 
