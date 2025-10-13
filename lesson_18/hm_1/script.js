@@ -54,7 +54,7 @@ class Countdown {
   }
 
   pause(isReset = false) {
-    if (this.#state === Countdown.NOTWORK_STATE && isReset) {
+    if (this.#state === Countdown.NOTWORK_STATE && !isReset) {
       return;
     }
 
