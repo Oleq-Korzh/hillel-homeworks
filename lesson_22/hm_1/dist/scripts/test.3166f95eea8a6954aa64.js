@@ -1,0 +1,1 @@
+(()=>{"use strict";new class{constructor(e,s){this.name=e,this.age=s}getUserInfo(){}}("Oleg",25).getUserInfo()})();
