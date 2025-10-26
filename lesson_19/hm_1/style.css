@@ -1,0 +1,158 @@
+/* Weather widget styles
+   File: lesson_19/hm_1/style.css
+*/
+:root {
+  --bg-start: #4b6cb7; /* deep blue */
+  --bg-end: #182848; /* navy */
+  --accent: rgba(255, 255, 255, 0.12);
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.85);
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Container that will host the widget */
+#weather-kharkiv {
+  max-width: 420px;
+  margin: 18px auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  color: var(--text);
+}
+
+.weather {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+  padding: 14px 16px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(24, 40, 72, 0.45);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: white;
+}
+
+.weather__left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 auto;
+}
+
+.weather__day {
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.weather__time {
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.weather__humidity,
+.weather__pressure,
+.weather__wind {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Right column: icon + temps */
+.weather__right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 110px;
+}
+
+.weather__icon {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+.weather__degree {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.weather__degree-feel {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.weather__info {
+  font-size: 1.05rem;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: var(--text);
+  margin-top: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Small responsive tweaks */
+@media (max-width: 420px) {
+  #weather-kharkiv {
+    padding: 0 8px;
+  }
+  .weather {
+    flex-direction: row;
+    padding: 12px;
+  }
+  .weather__right {
+    min-width: 90px;
+  }
+  .weather__icon {
+    width: 68px;
+    height: 68px;
+  }
+  .weather__degree {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .weather {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .weather__left {
+    order: 2;
+  }
+  .weather__right {
+    order: 1;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .weather__icon {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* Utility: small muted label for humidity/pressure if needed */
+.weather__label {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Focus/accessibility helpers (if interactive elements are added later) */
+.weather :focus {
+  outline: 3px solid rgba(255, 255, 255, 0.12);
+  outline-offset: 2px;
+}
