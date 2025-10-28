@@ -1,0 +1,12 @@
+.smile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 32px;
+  user-select: none;
+}
+
+.smile-card__emoji {
+  cursor: pointer;
+}
