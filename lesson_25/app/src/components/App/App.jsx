@@ -1,21 +1,18 @@
 import { useState, useEffect } from "react";
 import SmileCard from "../SmileCard/SmileCard";
 import Button from "../Button/Button";
+import { fetchWithError, filterWinner } from "../../utils/helpers";
+import { breakpoints } from "../../utils/breakpoints";
 import "./App.css";
 
 function App() {
   const [smiles, setSmiles] = useState([]);
   const [winner, setWinner] = useState(null);
 
-  const getData = async () => {
+  const getData = async (signal) => {
     try {
-      const response = await fetch("http://localhost:3000/smiles");
+      const data = await fetchWithError(breakpoints.smiles, { signal });
 
-      if (!response.ok) {
-        throw new Error("Error smiles");
-      }
-
-      const data = await response.json();
       setSmiles(data);
     } catch (error) {
       console.error(error);
@@ -24,31 +21,27 @@ function App() {
 
   useEffect(() => {
     const controller = new AbortController();
-    getData();
+    const signal = controller.signal;
+
+    getData(signal);
+
     return () => controller.abort();
   }, []);
 
-  useEffect(() => {
-    console.log(smiles);
-  }, [smiles]);
-
   const handleSmileClick = async (id) => {
-    const res = await fetch(`http://localhost:3000/smiles/${id}`, {
-      method: "POST",
-    });
+    try {
+      const data = await fetchWithError(`${breakpoints.smiles}/${id}`, {
+        method: "POST",
+      });
 
-    if (!res.ok) {
-      throw new Error("Error smiles");
+      setSmiles(data);
+    } catch (error) {
+      console.log(error);
     }
-
-    const data = await res.json();
-    setSmiles(data);
   };
 
   const handleShowResult = () => {
-    const winner = smiles.reduce((acc, current) => {
-      return acc.votes < current.votes ? current : acc;
-    });
+    const winner = filterWinner(smiles);
 
     setWinner(winner);
   };
