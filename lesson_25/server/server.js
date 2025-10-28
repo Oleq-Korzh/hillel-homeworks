@@ -25,14 +25,18 @@ app.post("/smiles/:id", (req, res) => {
   console.log("post");
   const id = parseInt(req.params.id);
 
-  console.log(req.params.id);
-
-  if (id) {
-    const smilesCurrent = smiles.find((smile) => smile.id === id);
-
-    smilesCurrent.votes += 1;
-    res.json(smiles);
+  if (!id) {
+    return;
   }
+
+  const smilesCurrent = smiles.find((smile) => smile.id === id);
+
+  if (!smilesCurrent) {
+    return;
+  }
+
+  smilesCurrent.votes += 1;
+  res.json(smiles);
 });
 
 app.listen(port, () => {
