@@ -9,19 +9,19 @@ function App() {
   const [smiles, setSmiles] = useState([]);
   const [winner, setWinner] = useState(null);
 
-  const getData = async (signal) => {
-    try {
-      const data = await fetchWithError(breakpoints.smiles, { signal });
-
-      setSmiles(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
+
+    const getData = async (signal) => {
+      try {
+        const data = await fetchWithError(breakpoints.smiles, { signal });
+
+        setSmiles(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     getData(signal);
 
