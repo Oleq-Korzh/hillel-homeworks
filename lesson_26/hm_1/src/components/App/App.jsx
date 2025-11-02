@@ -19,28 +19,26 @@ function App() {
     setPage(page);
   };
 
-  const handleSetContacts = (contact) => {
+  const handleSetContacts = (newContact) => {
     if (isEdit) {
-      console.log("isEdit");
-
-      const updatedContacts = contacts.map((el) => {
-        if (el?.id === contact?.id) {
-          return contact;
+      const updatedContacts = contacts.map((contact) => {
+        if (contact?.id === newContact?.id) {
+          return newContact;
         }
 
-        return el;
+        return contact;
       });
 
       setContacts(updatedContacts);
     } else {
-      setContacts([...contacts, contact]);
+      setContacts([...contacts, newContact]);
     }
 
     setPage("contact");
   };
 
   const handleDeleteContact = (id) => {
-    const filterContacts = contacts.filter((el) => el.id !== id);
+    const filterContacts = contacts.filter((contact) => contact.id !== id);
 
     setContacts(filterContacts);
   };
