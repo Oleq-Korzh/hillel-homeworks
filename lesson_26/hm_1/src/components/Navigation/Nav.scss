@@ -1,0 +1,38 @@
+.nav {
+  border-bottom: 1px solid #e1e4e8;
+  padding: 12px 24px;
+
+  &__list {
+    display: flex;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    position: relative;
+    padding: 8px 14px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #495057;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: #e9ecef;
+      color: #212529;
+    }
+
+    &.active {
+      color: #fff;
+      background: #0d6efd;
+      box-shadow: 0 2px 6px rgba(13, 110, 253, 0.3);
+
+      &:hover {
+        background: #0b5ed7;
+      }
+    }
+  }
+}

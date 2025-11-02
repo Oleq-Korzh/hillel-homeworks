@@ -1,0 +1,88 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  input {
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    }
+
+    &.error {
+      border-color: #dc3545;
+      background-color: #fff5f5;
+    }
+  }
+
+  .form__buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+
+    button {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-save {
+      background: #0d6efd;
+      color: #fff;
+
+      &:hover {
+        background: #0b5ed7;
+      }
+    }
+
+    .btn-cancel {
+      background: #e9ecef;
+      color: #212529;
+
+      &:hover {
+        background: #dee2e6;
+      }
+    }
+  }
+
+  .form__error {
+    color: #dc3545;
+    background: #fff5f5;
+    border: 1px solid #f5c2c7;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-3px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
