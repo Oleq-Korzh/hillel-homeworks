@@ -1,7 +1,7 @@
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import "./ContactList.css";
 
-const ContactList = ({ contacts, onDelete, onEdit }) => {
+const ContactList = ({ contacts = [], onDelete, onEdit }) => {
   const renderContacts = () =>
     contacts.map((el) => (
       <div className="contact-card" key={el.id}>

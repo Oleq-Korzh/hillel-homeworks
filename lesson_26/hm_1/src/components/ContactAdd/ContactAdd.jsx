@@ -18,8 +18,6 @@ const ContactAdd = ({
     phone: isEdit ? editContact?.phone : "",
   });
 
-  console.log(editContact);
-
   const [error, setError] = useState("");
 
   const resetForm = () => {
