@@ -1,0 +1,98 @@
+<!-- Save this as index.html -->
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TODO • Light Purple</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="card">
+        <header class="card__header">
+          <h1 class="title">Мій TODO</h1>
+        </header>
+        <form class="todo-form">
+          <input type="text" name="title" placeholder="Назва задачі" />
+          <textarea
+            name="description"
+            placeholder="Опис задачі"
+            rows="2"
+          ></textarea>
+          <div class="form-row">
+            <select name="priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+
+            <select name="status">
+              <option value="pending">Pending</option>
+              <option value="in-progress">In progress</option>
+              <option value="done">Done</option>
+            </select>
+
+            <button type="submit" class="btn btn--primary">Add</button>
+          </div>
+          <div class="todo-error hide">Помилка: введіть назву задачі</div>
+        </form>
+
+        <!-- Панель керування (без функціоналу, лише UI) -->
+        <div class="toolbar">
+          <div class="toolbar__left">
+            <div class="control control--search">
+              <input type="text" placeholder="Пошук за назвою…" />
+            </div>
+            <div class="control">
+              <label>Priority</label>
+              <select class="sort-priority">
+                <option value="all" selected>All</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+            <div class="control">
+              <label>Status</label>
+              <select class="sort-status">
+                <option value="all" selected>All</option>
+                <option value="pending">Pending</option>
+                <option value="in-progress">In progress</option>
+                <option value="done">Done</option>
+              </select>
+            </div>
+          </div>
+          <div class="toolbar__right">
+            <div class="control">
+              <label>Sort</label>
+              <select class="sort">
+                <option value="newest" selected>Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="priority">Priority (High→Low)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Список задач (демо-дані) -->
+        <ul class="todo-list"></ul>
+
+        <div class="todo-empty hide">
+          <div class="todo-empty__inner">
+            <h2 class="todo-empty__title">Поки що немає задач</h2>
+            <p class="todo-empty__text">
+              Додай першу задачу, щоб почати свій список.
+            </p>
+          </div>
+        </div>
+
+        <footer class="footer">
+          Показано <span class="count">0</span> задач
+        </footer>
+      </section>
+    </main>
+  </body>
+
+  <script type="module" src="js/app.js"></script>
+</html>
