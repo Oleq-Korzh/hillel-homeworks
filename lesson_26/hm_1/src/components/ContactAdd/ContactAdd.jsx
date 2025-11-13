@@ -1,7 +1,7 @@
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { regexes } from "../../utils/helpers";
 import routes from "../../utils/routes";
 import LanguageContext from "../../context/Language/LanguageContent";

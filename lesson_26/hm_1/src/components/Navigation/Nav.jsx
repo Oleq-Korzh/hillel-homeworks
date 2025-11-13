@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import routes from "../../utils/routes";
 import ThemeContext from "../../context/Theme/ThemeContext";

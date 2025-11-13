@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { HashRouter, Route, useNavigate } from "react-router";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Nav from "../Navigation/Nav";
 import routes from "../../utils/routes";
 import Home from "../../pages/Home";
@@ -64,7 +64,7 @@ function App() {
   return (
     <div className="container">
       {<Nav />}
-      <HashRouter>
+      <Routes>
         <Route
           path={routes.home}
           element={
@@ -88,7 +88,7 @@ function App() {
           }
         />
         <Route path={routes.error} element={<ErrorPage />} />
-      </HashRouter>
+      </Routes>
     </div>
   );
 }
