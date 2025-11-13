@@ -1,5 +1,71 @@
+/* === ТЕМЫ === */
+
+/* Светлая тема */
+body[data-theme="light"] {
+  --bg-body: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-input: #ffffff;
+  --bg-hover: #e9ecef;
+  --bg-hover-strong: #f1f3f5;
+
+  --border: #dee2e6;
+  --border-input: #ced4da;
+
+  --text-main: #212529;
+  --text-secondary: #495057;
+  --text-muted: #6c757d;
+
+  --btn-primary: #0d6efd;
+  --btn-primary-hover: #0b5ed7;
+  --btn-secondary: #e9ecef;
+  --btn-secondary-hover: #dee2e6;
+
+  --error-bg: #fff5f5;
+  --error-border: #f5c2c7;
+  --error-text: #dc3545;
+
+  --shadow: rgba(0, 0, 0, 0.05);
+  --shadow-strong: rgba(13, 110, 253, 0.15);
+}
+
+/* Тёмная тема */
+body[data-theme="dark"] {
+  --bg-body: #121212;
+  --bg-card: #1e1e1e;
+  --bg-input: #2b2b2b;
+  --bg-hover: #2a2d31;
+  --bg-hover-strong: #343a40;
+
+  --border: #3a3f44;
+  --border-input: #50565d;
+
+  --text-main: #f8f9fa;
+  --text-secondary: #ced4da;
+  --text-muted: #adb5bd;
+
+  --btn-primary: #0d6efd;
+  --btn-primary-hover: #0b5ed7;
+  --btn-secondary: #2f3337;
+  --btn-secondary-hover: #3a3f44;
+
+  --error-bg: #3a1a1a;
+  --error-border: #a84242;
+  --error-text: #ff6b6b;
+
+  --shadow: rgba(0, 0, 0, 0.25);
+  --shadow-strong: rgba(13, 110, 253, 0.4);
+}
+
+/* === Глобальные стили === */
+body {
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
 .container {
   max-width: 1080px;
   margin: 0 auto;
   padding: 0 24px;
+  color: var(--text-main);
 }

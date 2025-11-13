@@ -1,24 +1,21 @@
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import { regexes } from "../../utils/helpers";
+import routes from "../../utils/routes";
+import LanguageContext from "../../context/Language/LanguageContent";
 import "./ContactAdd.scss";
 
-const ContactAdd = ({
-  contacts,
-  setContacts,
-  setPage,
-  isEdit,
-  editContact,
-  onEditStop,
-}) => {
+const ContactAdd = ({ contacts, setContacts, isEdit, onEditStop }) => {
   const [form, setForm] = useState({
-    name: isEdit ? editContact?.name : "",
-    lastName: isEdit ? editContact?.lastName : "",
-    phone: isEdit ? editContact?.phone : "",
+    name: isEdit.isEdit ? isEdit.contact?.name : "",
+    lastName: isEdit.isEdit ? isEdit.contact?.lastName : "",
+    phone: isEdit.isEdit ? isEdit.contact?.phone : "",
   });
-
   const [error, setError] = useState("");
+  const { language } = useContext(LanguageContext);
+  const navigation = useNavigate();
 
   const resetForm = () => {
     setForm({ name: "", lastName: "", phone: "" });
@@ -26,7 +23,7 @@ const ContactAdd = ({
   };
 
   const handleBack = () => {
-    setPage("contact");
+    navigation(routes.home);
     onEditStop();
   };
 
@@ -48,18 +45,18 @@ const ContactAdd = ({
       !form.lastName.trim() ||
       !(form.phone && regexes.phone.test(form.phone))
     ) {
-      setError("There is an error in the fields, please check");
+      setError(language?.form?.errorField);
       return;
     }
 
-    if (isEdit) {
-      const findedContact = contacts.find((el) => el.id === editContact.id);
+    if (isEdit.isEdit) {
+      const findedContact = contacts.find((el) => el.id === isEdit.contact.id);
       const hasDublicate = contacts.some(
-        (el) => el.id !== editContact.id && el.phone === form.phone
+        (el) => el.id !== isEdit.contact.id && el.phone === form.phone
       );
 
       if (hasDublicate) {
-        setError("Such contact already exists");
+        setError(language?.form?.errorDuplicate);
         return;
       }
 
@@ -68,8 +65,8 @@ const ContactAdd = ({
       const id = Date.now();
       const hasDublicate = contacts.some((el) => el.phone === form.phone);
 
-      if (hasDublicate && !isEdit) {
-        setError("Such contact already exists");
+      if (hasDublicate && !isEdit.isEdit) {
+        setError(language?.form?.errorDuplicate);
         return;
       }
 
@@ -87,14 +84,14 @@ const ContactAdd = ({
         type="text"
         value={form.name}
         name="name"
-        placeholder="First Name"
+        placeholder={language?.form?.placeName}
         onChange={handleSimpleInput}
       />
       <input
         type="text"
         value={form.lastName}
         name="lastName"
-        placeholder="Last Name"
+        placeholder={language?.form?.placeLastName}
         onChange={handleSimpleInput}
       />
       <PhoneInput
@@ -107,10 +104,10 @@ const ContactAdd = ({
       {error && <div className="form__error">{error}</div>}
       <div className="form__buttons">
         <button type="submit" className="btn-save">
-          Submit
+          {language?.form?.buttonSend}
         </button>
         <button type="button" className="btn-cancel" onClick={handleBack}>
-          Back
+          {language?.form?.buttonBack}
         </button>
       </div>
     </form>

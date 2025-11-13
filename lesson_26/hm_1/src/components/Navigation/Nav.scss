@@ -1,6 +1,11 @@
 .nav {
-  border-bottom: 1px solid #e1e4e8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  border-bottom: 1px solid var(--border);
   padding: 12px 24px;
+  background: var(--bg-card);
 
   &__list {
     display: flex;
@@ -15,24 +20,52 @@
     padding: 8px 14px;
     font-size: 15px;
     font-weight: 500;
-    color: #495057;
+    color: var(--text-secondary);
     cursor: pointer;
     border-radius: 6px;
     transition: all 0.25s ease;
+    text-decoration: none;
 
     &:hover {
-      background: #e9ecef;
-      color: #212529;
+      background: var(--bg-hover);
+      color: var(--text-main);
     }
 
     &.active {
       color: #fff;
-      background: #0d6efd;
-      box-shadow: 0 2px 6px rgba(13, 110, 253, 0.3);
+      background: var(--btn-primary);
+      box-shadow: 0 2px 6px var(--shadow-strong);
 
       &:hover {
-        background: #0b5ed7;
+        background: var(--btn-primary-hover);
       }
+    }
+  }
+}
+
+.theme {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  span {
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    &:active {
+      transform: scale(0.96);
     }
   }
 }

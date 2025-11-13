@@ -1,9 +1,13 @@
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
-import "./ContactList.css";
+import { useContext } from "react";
+import LanguageContext from "../../context/Language/LanguageContent";
+import "./ContactList.scss";
 
 const ContactList = ({ contacts = [], onDelete, onEdit }) => {
+  const { language } = useContext(LanguageContext);
+
   if (contacts.length === 0) {
-    return <div className="contacts-empty">No contacts yet</div>;
+    return <div className="contacts-empty">{language.noContacts}</div>;
   }
 
   return (

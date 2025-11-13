@@ -1,26 +1,31 @@
-import { useEffect, useState } from "react";
-import ContactList from "../ContactList/ContactList";
-import ContactAdd from "../ContactAdd/ContactAdd";
+import { useContext, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router";
 import Nav from "../Navigation/Nav";
+import routes from "../../utils/routes";
+import Home from "../../pages/Home";
+import Form from "../../pages/Form";
+import ErrorPage from "../../pages/Error";
+import ContactContext from "../../context/Contacts/ContactsContext";
 import "./App.scss";
 
 function App() {
-  const [page, setPage] = useState("contact");
-  const [contacts, setContacts] = useState([]);
-  const [editContact, setEditContact] = useState(null);
-  const [isEdit, setIsEdit] = useState(false);
+  const { contacts, setContacts } = useContext(ContactContext);
+
+  const [isEdit, setIsEdit] = useState({
+    isEdit: false,
+    contact: null,
+  });
+  const navigate = useNavigate();
 
   const resetEdit = () => {
-    setEditContact(null);
-    setIsEdit(false);
-  };
-
-  const handleSetPage = (page) => {
-    setPage(page);
+    setIsEdit({
+      isEdit: false,
+      contact: null,
+    });
   };
 
   const handleSetContacts = (newContact) => {
-    if (isEdit) {
+    if (isEdit.isEdit) {
       const updatedContacts = contacts.map((contact) => {
         if (contact?.id === newContact?.id) {
           return newContact;
@@ -34,7 +39,7 @@ function App() {
       setContacts([...contacts, newContact]);
     }
 
-    setPage("contact");
+    navigate(routes.home);
   };
 
   const handleDeleteContact = (id) => {
@@ -44,47 +49,46 @@ function App() {
   };
 
   const handleEditContact = (contact) => {
-    setEditContact(contact);
-    setIsEdit(true);
-    setPage("add");
+    setIsEdit({
+      isEdit: true,
+      contact,
+    });
+
+    navigate(routes.form);
   };
 
   const handleStopEditContact = () => {
     resetEdit();
   };
 
-  useEffect(() => {
-    const localContacts = localStorage.getItem("contacts");
-
-    if (localContacts) {
-      setContacts(JSON.parse(localContacts));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
     <div className="container">
-      {<Nav nav={page} onNavigate={handleSetPage} />}
-      {page === "contact" ? (
-        <ContactList
-          contacts={contacts}
-          onDelete={handleDeleteContact}
-          onEdit={handleEditContact}
-          editContact={editContact}
+      {<Nav />}
+      <Routes>
+        <Route
+          path={routes.home}
+          element={
+            <Home
+              contacts={contacts}
+              onDelete={handleDeleteContact}
+              onEdit={handleEditContact}
+              // editContact={editContact}
+            />
+          }
         />
-      ) : (
-        <ContactAdd
-          contacts={contacts}
-          setContacts={handleSetContacts}
-          setPage={handleSetPage}
-          isEdit={isEdit}
-          editContact={editContact}
-          onEditStop={handleStopEditContact}
+        <Route
+          path={routes.form}
+          element={
+            <Form
+              contacts={contacts}
+              setContacts={handleSetContacts}
+              isEdit={isEdit}
+              onEditStop={handleStopEditContact}
+            />
+          }
         />
-      )}
+        <Route path={routes.error} element={<ErrorPage />} />
+      </Routes>
     </div>
   );
 }
