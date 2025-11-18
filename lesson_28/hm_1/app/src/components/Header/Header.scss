@@ -1,0 +1,12 @@
+.card__header {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, #fff, #fafbff);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 2.5vw, 28px);
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
