@@ -1,0 +1,58 @@
+.toolbar {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+
+  &__left,
+  &__right {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    &__right {
+      justify-content: space-between;
+    }
+  }
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 10px;
+
+  label {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  select,
+  input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  &--search {
+    flex: 1 1 240px;
+
+    input {
+      width: 100%;
+    }
+  }
+}
