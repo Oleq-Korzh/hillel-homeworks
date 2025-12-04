@@ -1,0 +1,45 @@
+.characters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.character-card {
+  background: #1f1f1f;
+  color: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #333;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+    border-color: #3e8ed0;
+  }
+}
+
+.character-name {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #ffe66c; // тематический SWAPI-жёлтый
+}
+
+.character-info {
+  font-size: 15px;
+  line-height: 1.45;
+
+  p {
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+
+    span:first-child {
+      color: #aaa;
+      margin-right: 10px;
+    }
+  }
+}
