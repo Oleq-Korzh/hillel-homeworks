@@ -12,6 +12,7 @@ import { getTodos } from "../../store/features/todos/todosActions";
 function App() {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos.data);
+
   const [filters, setFilters] = useState({
     _sort: "newest",
     _status: "all",

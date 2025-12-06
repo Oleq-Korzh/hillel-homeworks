@@ -9,7 +9,7 @@ app.use(cors());
 let db = [];
 
 app.get("/todos", (req, res) => {
-  res.json(db);
+  return res.json(db);
 });
 
 app.post("/todos", (req, res) => {

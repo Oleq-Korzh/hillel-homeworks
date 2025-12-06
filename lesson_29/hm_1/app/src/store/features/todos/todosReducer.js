@@ -13,7 +13,9 @@ const initialState = {
 
 const todosReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOADING_TODO:
+    case LOADING_TODO: {
+      return { ...state, isLoading: true };
+    }
     case GET_TODO:
     case ADD_TODO:
     case DELETE_TODO:
