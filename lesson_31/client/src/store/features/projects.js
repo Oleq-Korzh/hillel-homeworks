@@ -45,6 +45,21 @@ export const deleteProjectAsync = createAsyncThunk(
   }
 );
 
+export const editProjectAsync = createAsyncThunk(
+  "projects/edit",
+  async ({ id, payload }, { rejectWithValue }) => {
+    try {
+      const result = await axios.put(`${PROJECTS_URL}/${id}`, payload);
+
+      return result.data;
+    } catch (error) {
+      console.log(error);
+
+      return rejectWithValue(error);
+    }
+  }
+);
+
 const projectsSlice = createSlice({
   name: "projects",
   initialState,
@@ -71,8 +86,17 @@ const projectsSlice = createSlice({
       state.data = action.payload;
     });
 
-    builder.addCase(saveProjectAsync.fulfilled, (state) => {
+    builder.addCase(saveProjectAsync.fulfilled, (state, action) => {
+      state.push(action.payload);
       state.loaded = true;
+    });
+
+    builder.addCase(editProjectAsync.fulfilled, (state, action) => {
+      state.data = action.payload;
+    });
+
+    builder.addCase(editProjectAsync.rejected, (state, action) => {
+      console.log(action);
     });
   },
 });

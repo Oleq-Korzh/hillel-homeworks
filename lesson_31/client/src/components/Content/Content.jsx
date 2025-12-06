@@ -8,25 +8,27 @@ export default function Content() {
   return (
     <Routes>
       {menuItems.map(
-        ({ path, Component, protected: isProtected, public: isPublic }) => (
-          <Route
-            key={path}
-            path={path}
-            element={
-              isProtected ? (
-                <ProtectedRoute>
+        ({ path, Component, protected: isProtected, public: isPublic }) => {
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={
+                isProtected ? (
+                  <ProtectedRoute>
+                    <Component />
+                  </ProtectedRoute>
+                ) : isPublic ? (
+                  <PublicRoute>
+                    <Component />
+                  </PublicRoute>
+                ) : (
                   <Component />
-                </ProtectedRoute>
-              ) : isPublic ? (
-                <PublicRoute>
-                  <Component />
-                </PublicRoute>
-              ) : (
-                <Component />
-              )
-            }
-          />
-        )
+                )
+              }
+            />
+          );
+        }
       )}
     </Routes>
   );

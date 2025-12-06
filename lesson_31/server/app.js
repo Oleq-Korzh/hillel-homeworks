@@ -22,6 +22,20 @@ app.post("/projects", (request, response) => {
   return response.send(newProject);
 });
 
+app.put("/projects/:id", (request, response) => {
+  const { id } = request.params;
+  const data = request.body;
+
+  const index = projectsMock.findIndex((project) => project.id === id);
+
+  projectsMock[index] = {
+    ...projectsMock[index],
+    ...data,
+  };
+
+  return response.json(projectsMock);
+});
+
 app.delete("/projects/:id", (request, response) => {
   const { id } = request.params;
 

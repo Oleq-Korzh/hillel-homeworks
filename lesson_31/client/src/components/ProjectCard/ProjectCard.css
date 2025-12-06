@@ -59,3 +59,29 @@
   color: #666;
   line-height: 1.5;
 }
+
+.ProjectCard-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ProjectCard-edit {
+  background-color: transparent;
+  border: none;
+  color: #777;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.ProjectCard-edit:hover {
+  background-color: #eef;
+  color: #007bff;
+}

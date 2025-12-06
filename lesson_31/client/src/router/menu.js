@@ -1,4 +1,5 @@
 import AuthPage from "../pages/AuthPage/AuthPage";
+import EditProject from "../pages/EditProject/EditProject";
 import MainPage from "../pages/MainPage/MainPage";
 import NewProjectPage from "../pages/NewProjectPage/NewProjectPage";
 import ProjectsPage from "../pages/ProjectsPage/ProjectsPage";
@@ -10,6 +11,7 @@ export const urls = {
   PROJECTS_URL: "/projects",
   TASKS_URL: "/tasks",
   SINGLE_PROJECT: "/tasks/:projectId",
+  EDIT_PROJECT: "/projects/:id/edit",
   AUTH: "/auth",
 };
 
@@ -41,6 +43,12 @@ export const menuItems = [
     path: urls.SINGLE_PROJECT,
     hideInMenu: true,
     Component: TasksPage,
+    protected: true,
+  },
+  {
+    path: urls.EDIT_PROJECT,
+    hideInMenu: true,
+    Component: EditProject,
     protected: true,
   },
   {

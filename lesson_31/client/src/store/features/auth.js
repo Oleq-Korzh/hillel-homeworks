@@ -7,6 +7,7 @@ const initialState = {
     role: "",
   },
   error: "",
+  loaded: false,
 };
 
 export const loginAsync = createAsyncThunk(
@@ -79,21 +80,25 @@ const authSlice = createSlice({
       state.isAuth = action.payload.isAuth;
       state.user = action.payload?.user;
       state.error = "";
+      state.loaded = true;
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.error = action.payload;
+      state.loaded = true;
     });
 
     builder.addCase(checkAuthAsync.fulfilled, (state, action) => {
       state.isAuth = action.payload.isAuth;
       state.user = action.payload?.user;
       state.error = "";
+      state.loaded = true;
     });
 
     builder.addCase(logoutAsync.fulfilled, (state, action) => {
       state.isAuth = action.payload.isAuth;
       state.user = action.payload?.user;
       state.error = "";
+      state.loaded = true;
     });
   },
 });
