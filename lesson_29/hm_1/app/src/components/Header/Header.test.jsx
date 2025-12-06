@@ -17,7 +17,9 @@ vi.mock("../../hooks/useLang", () => ({
 describe("Header component", () => {
   test("render header", () => {
     render(<Header />);
+    // 1. что имеет заголовок первый пукнт
     expect(screen.getByText("My Todo List")).toBeInTheDocument();
+    // 2. ну и что выводит язык через мокнутые данные
     expect(screen.getByText("EN")).toBeInTheDocument();
   });
 

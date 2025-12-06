@@ -8,15 +8,16 @@ vi.mock("../../hooks/useLang", () => ({
   useLang: () => ({
     langData: {
       form: {
-        titlePlaceholder: "Title",
-        descPlaceholder: "Description",
-        button: "Add task",
+        titlePlaceholder: "Task name",
+        descPlaceholder: "Description of task",
+        button: "Add",
       },
     },
   }),
 }));
 
 const mockDispatch = vi.fn();
+
 vi.mock("react-redux", () => ({
   useDispatch: () => mockDispatch,
 }));
@@ -39,10 +40,16 @@ describe("TodoForm component", () => {
 
     const user = userEvent.setup();
 
-    const titleInput = screen.getByPlaceholderText("Title");
-    const descInput = screen.getByPlaceholderText("Description");
-    const button = screen.getByText("Add task");
+    const titleInput = screen.getByPlaceholderText("Task name");
+    const descInput = screen.getByPlaceholderText("Description of task");
+    const button = screen.getByText("Add");
 
+    // проверяем ввод цифр
+    await user.type(titleInput, "123");
+    expect(titleInput).toHaveValue("123");
+    await user.clear(titleInput);
+
+    // И буквы (можно было совместить, но я попрактиковался с методами)
     await user.type(titleInput, "Test task");
     await user.type(descInput, "Some description");
 
@@ -50,6 +57,7 @@ describe("TodoForm component", () => {
 
     expect(mockDispatch).toHaveBeenCalled();
 
+    // Это подходит под 3й и 4й пункт, по сути если одно из полей будет пустое - будет ошибка
     expect(setTodo).toHaveBeenCalledWith({
       title: "Test task",
       description: "Some description",

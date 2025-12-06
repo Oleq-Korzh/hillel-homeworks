@@ -13,7 +13,7 @@ vi.mock("../../store/features/todos/todosActions", () => ({
 }));
 
 describe("App root component", () => {
-  test("делает initial загрузку тудушек", () => {
+  test("load todos", () => {
     const store = mockStore({
       todos: { data: [] },
       lang: {

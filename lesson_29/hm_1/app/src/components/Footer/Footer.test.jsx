@@ -17,6 +17,7 @@ describe("Footer component", () => {
   test("render count footer", () => {
     render(<Footer count={5} />);
 
+    // тут были ошибки из-за того, что в одном диве находится 3 разные строки, поэтому пришлось через includes делать, чтобы нашло
     expect(
       screen.getByText((text) => text.includes("Total tasks:"))
     ).toBeInTheDocument();
