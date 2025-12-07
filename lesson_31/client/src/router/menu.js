@@ -1,7 +1,9 @@
 import AuthPage from "../pages/AuthPage/AuthPage";
 import EditProject from "../pages/EditProject/EditProject";
+import EditTask from "../pages/EditTask/EditTask";
 import MainPage from "../pages/MainPage/MainPage";
 import NewProjectPage from "../pages/NewProjectPage/NewProjectPage";
+import NewTaskPage from "../pages/NewTaskPage/NewTaskPage";
 import ProjectsPage from "../pages/ProjectsPage/ProjectsPage";
 import TasksPage from "../pages/TasksPage/TasksPage";
 
@@ -9,9 +11,12 @@ export const urls = {
   HOME_URL: "/",
   NEW_PROJECT_URL: "/projects/new",
   PROJECTS_URL: "/projects",
-  TASKS_URL: "/tasks",
   SINGLE_PROJECT: "/tasks/:projectId",
   EDIT_PROJECT: "/projects/:id/edit",
+  TASKS_URL: "/tasks",
+  NEW_TASK_URL: "/tasks/new",
+  NEW_TASK_IN_PROJECT_URL: "/projects/:projectId/tasks/new",
+  EDIT_TASK: "/tasks/:id/edit",
   AUTH: "/auth",
 };
 
@@ -34,12 +39,6 @@ export const menuItems = [
     protected: true,
   },
   {
-    path: urls.TASKS_URL,
-    title: "Tasks",
-    Component: TasksPage,
-    protected: true,
-  },
-  {
     path: urls.SINGLE_PROJECT,
     hideInMenu: true,
     Component: TasksPage,
@@ -49,6 +48,30 @@ export const menuItems = [
     path: urls.EDIT_PROJECT,
     hideInMenu: true,
     Component: EditProject,
+    protected: true,
+  },
+  {
+    path: urls.TASKS_URL,
+    title: "Tasks",
+    Component: TasksPage,
+    protected: true,
+  },
+  {
+    path: urls.NEW_TASK_URL,
+    hideInMenu: true,
+    Component: NewTaskPage,
+    protected: true,
+  },
+  {
+    path: urls.NEW_TASK_IN_PROJECT_URL,
+    hideInMenu: true,
+    Component: NewTaskPage,
+    protected: true,
+  },
+  {
+    path: urls.EDIT_TASK,
+    hideInMenu: true,
+    Component: EditTask,
     protected: true,
   },
   {

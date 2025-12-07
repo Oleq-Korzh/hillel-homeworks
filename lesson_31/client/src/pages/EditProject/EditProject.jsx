@@ -60,8 +60,6 @@ const EditProject = () => {
     }
   };
 
-  console.log(priority);
-
   return (
     <div className="EditProject">
       <button className="back-button" onClick={handleReturnToProjects}>

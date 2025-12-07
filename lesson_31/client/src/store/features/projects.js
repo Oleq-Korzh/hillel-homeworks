@@ -87,7 +87,7 @@ const projectsSlice = createSlice({
     });
 
     builder.addCase(saveProjectAsync.fulfilled, (state, action) => {
-      state.push(action.payload);
+      state.data.push(action.payload);
       state.loaded = true;
     });
 

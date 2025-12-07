@@ -48,6 +48,39 @@ app.get("/tasks", (request, response) => {
   return response.json(tasksData);
 });
 
+app.post("/tasks", (request, response) => {
+  const data = request.body;
+  const newProject = {
+    id: uuidv4(),
+    createdAt: new Date().toISOString(),
+    ...data,
+  };
+  tasksData.push(newProject);
+  return response.send(newProject);
+});
+
+app.put("/tasks/:id", (request, response) => {
+  const { id } = request.params;
+  const data = request.body;
+
+  const index = tasksData.findIndex((project) => project.id === id);
+
+  tasksData[index] = {
+    ...tasksData[index],
+    ...data,
+  };
+
+  return response.json(tasksData);
+});
+
+app.delete("/tasks/:id", (request, response) => {
+  const { id } = request.params;
+
+  const index = tasksData.findIndex((el) => el.id === id);
+  tasksData.splice(index, 1);
+  return response.json(tasksData);
+});
+
 app.get("/tasks/:projectId", (request, response) => {
   const { projectId } = request.params;
   const filtered = tasksData.filter((t) => t.projectId === projectId);
