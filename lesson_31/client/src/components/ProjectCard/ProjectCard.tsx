@@ -4,6 +4,15 @@ import "./ProjectCard.css";
 import { deleteProjectAsync } from "../../store/features/projects";
 import { useNavigate } from "react-router";
 import { urls } from "../../router/menu";
+import { useAppDispatch } from "../../store/hooks";
+
+interface ProjectCardProps {
+  id: string;
+  title: string;
+  description: string;
+  priority: "HIGH" | "MEDIUM" | "LOW";
+  onClick?: (id: string) => void;
+}
 
 export default function ProjectCard({
   id,
@@ -11,20 +20,20 @@ export default function ProjectCard({
   description,
   priority,
   onClick,
-}) {
-  const dispatch = useDispatch();
+}: ProjectCardProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
     onClick && onClick(id);
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     dispatch(deleteProjectAsync(id));
   };
 
-  const handleEdit = (e) => {
+  const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     id && navigate(urls.EDIT_PROJECT.replace(":id", id));
   };

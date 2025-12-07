@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Task, TasksState } from "./types/tasks.types";
 
-const initialState = {
+const initialState: TasksState = {
   data: [],
 };
 
@@ -19,39 +20,45 @@ const initialState = {
 
 const TASKS_URL = "http://localhost:3000/tasks";
 
-export const getTasksAsync = createAsyncThunk(
+export const getTasksAsync = createAsyncThunk<Task[], string | undefined>(
   "tasks/getList",
   async (projectId = "") => {
-    const result = await axios.get(`${TASKS_URL}/${projectId}`);
+    const result = await axios.get<Task[]>(`${TASKS_URL}/${projectId}`);
     return result.data;
   }
 );
 
-export const saveTaskAsync = createAsyncThunk("tasks/save", async (task) => {
-  const result = await axios.post(TASKS_URL, task);
-  return result.data;
-});
-
-export const deleteTaskAsync = createAsyncThunk("tasks/delete", async (id) => {
-  const result = await axios.delete(`${TASKS_URL}/${id}`);
-
-  return result.data;
-});
-
-export const editTaskAsync = createAsyncThunk(
-  "tasks/edit",
-  async ({ id, payload }, { rejectWithValue }) => {
-    try {
-      const result = await axios.put(`${TASKS_URL}/${id}`, payload);
-
-      return result.data;
-    } catch (error) {
-      console.log(error);
-
-      return rejectWithValue(error);
-    }
+export const saveTaskAsync = createAsyncThunk<Task, Partial<Task>>(
+  "tasks/save",
+  async (task) => {
+    const result = await axios.post<Task>(TASKS_URL, task);
+    return result.data;
   }
 );
+
+export const deleteTaskAsync = createAsyncThunk<Task[], string>(
+  "tasks/delete",
+  async (id) => {
+    const result = await axios.delete(`${TASKS_URL}/${id}`);
+
+    return result.data;
+  }
+);
+
+export const editTaskAsync = createAsyncThunk<
+  Task[],
+  { id: string; payload: Partial<Task> }
+>("tasks/edit", async ({ id, payload }, { rejectWithValue }) => {
+  try {
+    const result = await axios.put(`${TASKS_URL}/${id}`, payload);
+
+    return result.data;
+  } catch (error) {
+    console.log(error);
+
+    return rejectWithValue(error);
+  }
+});
 
 const tasksSlice = createSlice({
   name: "tasks",

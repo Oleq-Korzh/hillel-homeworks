@@ -9,16 +9,17 @@ import {
 import { urls } from "../../router/menu";
 import { PRIORITIES } from "../../common/priorities";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 const EditProject = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { id } = useParams();
-  const { data: projects } = useSelector((state) => state.projects);
+  const dispatch = useAppDispatch();
+  const { id } = useParams<{ id: string }>();
+  const { data: projects } = useAppSelector((state) => state.projects);
   const project = projects.find((project) => project.id === id);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("HIGH");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [priority, setPriority] = useState<"HIGH" | "MEDIUM" | "LOW">("HIGH");
 
   useEffect(() => {
     if (!project) {
@@ -27,28 +28,32 @@ const EditProject = () => {
   }, [project, dispatch]);
 
   useEffect(() => {
+    if (!project) return;
+
     setTitle(project?.title ?? "");
     setDescription(project?.description ?? "");
-    setPriority(project?.priority.toUpperCase());
+    setPriority(project.priority.toUpperCase() as "HIGH" | "MEDIUM" | "LOW");
   }, [project]);
 
   const handleReturnToProjects = () => {
     navigate(urls.PROJECTS_URL);
   };
 
-  const handleInputTitle = (e) => {
+  const handleInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const handleInputDesc = (e) => {
+  const handleInputDesc = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
-  const handleSelect = (e) => {
-    setPriority(e.target.value);
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPriority(e.target.value as "HIGH" | "MEDIUM" | "LOW");
   };
 
   const handleSave = () => {
+    if (!id || !project) return;
+
     if (title.trim() !== "" && description.trim() !== "") {
       dispatch(
         editProjectAsync({

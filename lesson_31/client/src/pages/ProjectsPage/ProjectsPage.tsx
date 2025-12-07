@@ -6,13 +6,16 @@ import { useEffect, useMemo } from "react";
 import { getProjectsAsync } from "../../store/features/projects";
 import { urls } from "../../router/menu";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { ProjectType } from "./Project.types";
+import { ProjectTypes } from "./Project.types";
 
 export default function ProjectsPage() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   const [priorityFilter, setPriorityFilter] = useState("ALL");
-  const { data: projects } = useSelector((state) => state.projects);
+  const { data: projects } = useAppSelector((state) => state.projects);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getProjectsAsync());

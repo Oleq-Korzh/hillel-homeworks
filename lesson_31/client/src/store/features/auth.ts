@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { AuthResponse, AuthState, LoginCredentials } from "./types/auth.types";
 
-const initialState = {
+const initialState: AuthState = {
   isAuth: false,
   user: {
     name: "",
@@ -10,35 +11,36 @@ const initialState = {
   loaded: false,
 };
 
-export const loginAsync = createAsyncThunk(
-  "auth/login",
-  async (cred, { rejectWithValue }) => {
-    try {
-      const res = await fetch("http://localhost:3000/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cred),
-      });
+export const loginAsync = createAsyncThunk<
+  AuthResponse,
+  LoginCredentials,
+  { rejectValue: string }
+>("auth/login", async (cred, { rejectWithValue }) => {
+  try {
+    const res = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cred),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        return rejectWithValue(data.error);
-      }
-
-      return data;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error);
+    if (!res.ok) {
+      return rejectWithValue(data.error);
     }
-  }
-);
 
-export const checkAuthAsync = createAsyncThunk(
+    return data;
+  } catch (error) {
+    console.log(error);
+    return rejectWithValue(error as string);
+  }
+});
+
+export const checkAuthAsync = createAsyncThunk<AuthResponse>(
   "auth/check",
-  async (_, rejectWithValue) => {
+  async (_, { rejectWithValue }) => {
     try {
       const res = await fetch("http://localhost:3000/login/check");
       const data = await res.json();
@@ -51,7 +53,7 @@ export const checkAuthAsync = createAsyncThunk(
   }
 );
 
-export const logoutAsync = createAsyncThunk(
+export const logoutAsync = createAsyncThunk<AuthResponse>(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
@@ -75,6 +77,7 @@ export const logoutAsync = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(loginAsync.fulfilled, (state, action) => {
       state.isAuth = action.payload.isAuth;
@@ -83,7 +86,7 @@ const authSlice = createSlice({
       state.loaded = true;
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
-      state.error = action.payload;
+      state.error = action.payload as string;
       state.loaded = true;
     });
 

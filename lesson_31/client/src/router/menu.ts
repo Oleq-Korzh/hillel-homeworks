@@ -1,3 +1,4 @@
+import { ComponentType } from "react";
 import AuthPage from "../pages/AuthPage/AuthPage";
 import EditProject from "../pages/EditProject/EditProject";
 import EditTask from "../pages/EditTask/EditTask";
@@ -6,6 +7,15 @@ import NewProjectPage from "../pages/NewProjectPage/NewProjectPage";
 import NewTaskPage from "../pages/NewTaskPage/NewTaskPage";
 import ProjectsPage from "../pages/ProjectsPage/ProjectsPage";
 import TasksPage from "../pages/TasksPage/TasksPage";
+
+interface AppRoute {
+  path: string;
+  title?: string;
+  Component: ComponentType<any>;
+  protected?: boolean;
+  public?: boolean;
+  hideInMenu?: boolean;
+}
 
 export const urls = {
   HOME_URL: "/",
@@ -20,7 +30,7 @@ export const urls = {
   AUTH: "/auth",
 };
 
-export const menuItems = [
+export const menuItems: AppRoute[] = [
   {
     path: urls.HOME_URL,
     title: "Main",

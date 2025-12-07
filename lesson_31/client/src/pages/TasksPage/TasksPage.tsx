@@ -7,12 +7,14 @@ import { getTasksAsync } from "../../store/features/tasks";
 import { useState } from "react";
 import { useMemo } from "react";
 import { urls } from "../../router/menu";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { ParamsTypes, Task } from "./TaskPage.types";
 
 export default function TasksPage() {
   const [filterDate, setFilterDate] = useState("NEW");
-  const { data: tasks } = useSelector((state) => state.tasks);
-  const { projectId } = useParams();
-  const dispatch = useDispatch();
+  const { data: tasks } = useAppSelector((state) => state.tasks);
+  const { projectId } = useParams<ParamsTypes>();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function TasksPage() {
     }
   };
 
-  const filteredTasks = useMemo(() => {
+  const filteredTasks = useMemo<Task[]>(() => {
     const filtered = projectId
       ? tasks.filter((task) => task.projectId === projectId)
       : tasks;
@@ -42,7 +44,9 @@ export default function TasksPage() {
       const dateA = new Date(a.createdAt);
       const dateB = new Date(b.createdAt);
 
-      return filterDate === "OLD" ? dateA - dateB : dateB - dateA;
+      return filterDate === "OLD"
+        ? dateA.getTime() - dateB.getTime()
+        : dateB.getTime() - dateA.getTime();
     });
   }, [tasks, filterDate, projectId]);
 
@@ -74,7 +78,11 @@ export default function TasksPage() {
       )}
 
       {filteredTasks.map((task) => (
-        <TaskCard key={task.id} {...task} />
+        <TaskCard
+          key={task.id}
+          {...task}
+          priority={task.priority as "HIGH" | "MEDIUM" | "LOW"}
+        />
       ))}
     </div>
   );

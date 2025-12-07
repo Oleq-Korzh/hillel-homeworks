@@ -1,16 +1,15 @@
 import { useState } from "react";
 import "./AuthPage.css";
-import { useDispatch } from "react-redux";
 import { loginAsync } from "../../store/features/auth";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 function AuthPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { error } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { error } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (username.trim() !== "" && password.trim() !== "") {

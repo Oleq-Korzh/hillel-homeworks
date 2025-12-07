@@ -1,10 +1,10 @@
 import { menuItems } from "../../router/menu";
 import { Link } from "react-router";
 import "./Menu.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../store/hooks";
 
 export default function Menu() {
-  const { isAuth } = useSelector((state) => state.auth);
+  const { isAuth } = useAppSelector((state) => state.auth);
 
   return (
     <nav>

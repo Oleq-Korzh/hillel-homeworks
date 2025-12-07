@@ -1,11 +1,12 @@
-import { useDispatch } from "react-redux";
 import { logoutAsync } from "../../store/features/auth";
 import { useNavigate } from "react-router";
 import "./AuthSidebar.css";
 import { urls } from "../../router/menu";
+import { useAppDispatch } from "../../store/hooks";
+import { AuthSidebarProps } from "./AuthSidebar.types";
 
-export default function AuthSidebar({ user }) {
-  const dispatch = useDispatch();
+export default function AuthSidebar({ user }: AuthSidebarProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {

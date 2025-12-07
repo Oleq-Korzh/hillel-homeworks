@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { getProjectsAsync } from "../../store/features/projects";
-import "./NewTaskPage.css";
-import { saveTaskAsync } from "../../store/features/tasks";
+import "./EdiTask.css";
+import {
+  editTaskAsync,
+  getTasksAsync,
+  saveTaskAsync,
+} from "../../store/features/tasks";
 import { urls } from "../../router/menu";
+import { getProjectsAsync } from "../../store/features/projects";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { Task } from "./EditTask.types";
 
 // Лучше создам отдельно от проектов, мало ли приоритетов у задач будет больше
 
@@ -21,20 +27,19 @@ const TASKS_STATUS = {
   blocked: "Blocked",
 };
 
-const NewTaskPage = () => {
-  const { projectId } = useParams();
+const EditTask = () => {
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { data: projects } = useSelector((state) => state.projects);
-
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("LOW");
-  const [status, setStatus] = useState("todo");
-  const [assignee, setAssignee] = useState("");
-  const [selectedProjectId, setSelectedProjectId] = useState(projectId || "");
-  const currentProject = projects.find((project) => project.id === projectId);
+  const dispatch = useAppDispatch();
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [priority, setPriority] = useState<string>("LOW");
+  const [status, setStatus] = useState<string>("todo");
+  const [assignee, setAssignee] = useState<string>("");
+  const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const { data: projects } = useAppSelector((state) => state.projects);
+  const { data: tasks } = useAppSelector((state) => state.tasks);
+  const currentTask = tasks.find((task) => task.id === id);
 
   useEffect(() => {
     if (projects.length === 0) {
@@ -42,10 +47,25 @@ const NewTaskPage = () => {
     }
   }, [projects, dispatch]);
 
-  const handleSave = () => {
-    if (!title.trim() || !description.trim() || !selectedProjectId) return;
+  useEffect(() => {
+    if (!currentTask) {
+      dispatch(getTasksAsync());
+    }
+  }, [currentTask, dispatch]);
 
-    const newTask = {
+  useEffect(() => {
+    setTitle(currentTask?.title ?? "");
+    setDescription(currentTask?.description ?? "");
+    setPriority(currentTask?.priority ?? "LOW");
+    setStatus(currentTask?.status ?? "todo");
+    setAssignee(currentTask?.assignee ?? "");
+    setSelectedProjectId(currentTask?.projectId ?? "");
+  }, [currentTask]);
+
+  const handleSave = () => {
+    if (!id) return;
+
+    const updatedTask: Partial<Task> = {
       title,
       description,
       priority,
@@ -54,7 +74,7 @@ const NewTaskPage = () => {
       projectId: selectedProjectId,
     };
 
-    dispatch(saveTaskAsync(newTask));
+    dispatch(editTaskAsync({ id, payload: updatedTask }));
     navigate(`${urls.SINGLE_PROJECT.replace(":projectId", selectedProjectId)}`);
   };
 
@@ -62,35 +82,35 @@ const NewTaskPage = () => {
     navigate(-1);
   };
 
-  const handleInputTitle = (e) => {
+  const handleInputTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
 
-  const handleInputDesc = (e) => {
+  const handleInputDesc = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
-  const handleSelectPriority = (e) => {
+  const handleSelectPriority = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPriority(e.target.value);
   };
 
-  const handleSelectStatus = (e) => {
+  const handleSelectStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
   };
 
-  const handleSelectProject = (e) => {
+  const handleSelectProject = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedProjectId(e.target.value);
   };
 
-  const handleInputAssignee = (e) => {
+  const handleInputAssignee = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAssignee(e.target.value);
   };
 
   return (
     <div className="AddTaskPage">
       <h2>
-        Добавить задачу{" "}
-        {currentProject && <span>для проекта {currentProject?.title}</span>}
+        Изменить задачу{" "}
+        {currentTask?.title && <span>{currentTask?.title}</span>}
       </h2>
 
       <div className="Form">
@@ -132,22 +152,18 @@ const NewTaskPage = () => {
           ))}
         </select>
 
-        {!projectId && (
-          <>
-            <label>Проект</label>
-            <select value={selectedProjectId} onChange={handleSelectProject}>
-              <option value="">Выберите проект…</option>
-              {projects.map((project) => (
-                <option key={project.id} value={project.id}>
-                  {project.title}
-                </option>
-              ))}
-            </select>
-          </>
-        )}
+        <label>Проект</label>
+        <select value={selectedProjectId} onChange={handleSelectProject}>
+          <option value="">Выберите проект…</option>
+          {projects.map((project) => (
+            <option key={project.id} value={project.id}>
+              {project.title}
+            </option>
+          ))}
+        </select>
 
         <button className="SaveBtn" type="button" onClick={handleSave}>
-          Создать задачу
+          Изменить задачу
         </button>
 
         <button className="BackBtn" onClick={handleBackButton}>
@@ -158,4 +174,4 @@ const NewTaskPage = () => {
   );
 };
 
-export default NewTaskPage;
+export default EditTask;

@@ -5,21 +5,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveProjectAsync } from "../../store/features/projects";
 import { useNavigate } from "react-router";
 import { urls } from "../../router/menu";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
 export default function NewProjectPage() {
-  const titleRef = useRef();
-  const descriptionRef = useRef();
-  const priorityRef = useRef();
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const priorityRef = useRef<HTMLSelectElement>(null);
   const navigate = useNavigate();
 
-  const { loaded: isProjectSaved } = useSelector((state) => state.projects);
+  const { loaded: isProjectSaved } = useAppSelector((state) => state.projects);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSave = () => {
-    const title = titleRef.current.value;
-    const description = descriptionRef.current.value;
-    const priority = priorityRef.current.value;
+    if (!titleRef.current || !descriptionRef.current || !priorityRef.current)
+      return;
+
+    const title = titleRef.current.value.trim();
+    const description = descriptionRef.current.value.trim();
+    const priority = priorityRef.current.value as "LOW" | "HIGH" | "MEDIUM";
 
     dispatch(saveProjectAsync({ title, description, priority }));
   };

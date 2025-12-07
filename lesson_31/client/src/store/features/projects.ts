@@ -1,8 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 // import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
+import {
+  NewProjectPayload,
+  Project,
+  ProjectsState,
+} from "./types/projects.types";
 
-const initialState = {
+const initialState: ProjectsState = {
   data: [],
   loaded: false,
 };
@@ -20,45 +25,45 @@ const initialState = {
 
 const PROJECTS_URL = "http://localhost:3000/projects";
 
-export const getProjectsAsync = createAsyncThunk(
+export const getProjectsAsync = createAsyncThunk<Project[]>(
   "projects/getList",
   async () => {
-    const result = await axios.get(PROJECTS_URL);
+    const result = await axios.get<Project[]>(PROJECTS_URL);
     return result.data;
   }
 );
 
-export const saveProjectAsync = createAsyncThunk(
+export const saveProjectAsync = createAsyncThunk<Project, NewProjectPayload>(
   "projects/save",
-  async (project) => {
-    const result = await axios.post(PROJECTS_URL, project);
+  async (payload) => {
+    const result = await axios.post<Project>(PROJECTS_URL, payload);
     return result.data;
   }
 );
 
-export const deleteProjectAsync = createAsyncThunk(
+export const deleteProjectAsync = createAsyncThunk<Project[], string>(
   "projects/delete",
   async (id) => {
-    const result = await axios.delete(`${PROJECTS_URL}/${id}`);
+    const result = await axios.delete<Project[]>(`${PROJECTS_URL}/${id}`);
 
     return result.data;
   }
 );
 
-export const editProjectAsync = createAsyncThunk(
-  "projects/edit",
-  async ({ id, payload }, { rejectWithValue }) => {
-    try {
-      const result = await axios.put(`${PROJECTS_URL}/${id}`, payload);
+export const editProjectAsync = createAsyncThunk<
+  Project[],
+  { id: string; payload: Partial<Project> }
+>("projects/edit", async ({ id, payload }, { rejectWithValue }) => {
+  try {
+    const result = await axios.put(`${PROJECTS_URL}/${id}`, payload);
 
-      return result.data;
-    } catch (error) {
-      console.log(error);
+    return result.data;
+  } catch (error) {
+    console.log(error);
 
-      return rejectWithValue(error);
-    }
+    return rejectWithValue(error);
   }
-);
+});
 
 const projectsSlice = createSlice({
   name: "projects",

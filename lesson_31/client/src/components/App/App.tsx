@@ -2,12 +2,12 @@ import { BrowserRouter } from "react-router";
 import Content from "../Content/Content";
 import Header from "../Header/Header";
 import "./App.scss";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { checkAuthAsync } from "../../store/features/auth";
+import { useAppDispatch } from "../../store/hooks";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(checkAuthAsync());

@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router";
 import "./Content.css";
 import { menuItems } from "../../router/menu";
 import ProtectedRoute from "../../router/PrivateRouter";
-import PublicRoute from "../../router/publicRouter";
+import PublicRoute from "../../router/PublicRouter";
 
 export default function Content() {
   return (

@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
 import AuthSidebar from "../AuthForm/AuthSidebar";
 import Menu from "../Menu/Menu";
 import "./Header.css";
+import { useAppSelector } from "../../store/hooks";
 
 export default function Header() {
-  const { isAuth, user } = useSelector((state) => state.auth);
+  const { isAuth, user } = useAppSelector((state) => state.auth);
 
   return (
     <div className="Header">

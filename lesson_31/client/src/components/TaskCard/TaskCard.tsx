@@ -4,17 +4,30 @@ import "./TaskCard.css";
 import { deleteTaskAsync } from "../../store/features/tasks";
 import { useNavigate } from "react-router";
 import { urls } from "../../router/menu";
+import { useAppDispatch } from "../../store/hooks";
 
-export default function TaskCard({ id, title, description, priority }) {
-  const dispatch = useDispatch();
+interface TaskCardProps {
+  id: string;
+  title: string;
+  description: string;
+  priority: "HIGH" | "MEDIUM" | "LOW";
+}
+
+export default function TaskCard({
+  id,
+  title,
+  description,
+  priority,
+}: TaskCardProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleDeleteTask = (e) => {
+  const handleDeleteTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     dispatch(deleteTaskAsync(id));
   };
 
-  const handleEditTask = (e) => {
+  const handleEditTask = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     navigate(urls.EDIT_TASK.replace(":id", id));
   };
