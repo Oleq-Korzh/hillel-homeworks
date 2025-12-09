@@ -1,14 +1,11 @@
 import { useNavigate } from "react-router";
 import ProjectCard from "../../components/ProjectCard/ProjectCard";
 import "./ProjectsPage.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { getProjectsAsync } from "../../store/features/projects";
 import { urls } from "../../router/menu";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { ProjectType } from "./Project.types";
-import { ProjectTypes } from "./Project.types";
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState<string>("");
@@ -21,11 +18,11 @@ export default function ProjectsPage() {
     dispatch(getProjectsAsync());
   }, [dispatch]);
 
-  const handleClick = (projectId) => {
+  const handleClick = (projectId: string) => {
     navigate(`/tasks/${projectId}`);
   };
 
-  const handleSearchInput = (e) => {
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value.toLowerCase());
   };
 
